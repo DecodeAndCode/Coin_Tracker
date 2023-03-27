@@ -74,6 +74,23 @@ class _PriceScreenState extends State<PriceScreen> {
     getData();
   }
 
+  Column makeCards() {
+    List<CryptoCard> cryptoCards = [];
+    for (String crypto in cryptoList) {
+      cryptoCards.add(
+        CryptoCard(
+          cryptoCurrency: crypto,
+          selectedCurrency: selectedCurrency,
+          value: isWaiting ? '?' : coinValues[crypto].toString(),
+        ),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: cryptoCards,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,26 +102,7 @@ class _PriceScreenState extends State<PriceScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              CryptoCard(
-                cryptoCurrency: 'BTC',
-                value: isWaiting ? '?' : coinValues['BTC'].toString(),
-                selectedCurrency: selectedCurrency,
-              ),
-              CryptoCard(
-                cryptoCurrency: 'ETH',
-                value: isWaiting ? '?' : coinValues['ETH'].toString(),
-                selectedCurrency: selectedCurrency,
-              ),
-              CryptoCard(
-                cryptoCurrency: 'LTC',
-                value: isWaiting ? '?' : coinValues['LTC'].toString(),
-                selectedCurrency: selectedCurrency,
-              ),
-            ],
-          ),
+          makeCards(),
           Container(
             height: 150.0,
             alignment: Alignment.center,
